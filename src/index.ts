@@ -36,7 +36,7 @@ export function writeCookie(
     if (value !== undefined && !(value instanceof Date) && value !== true) cookie += `=${encodeURIComponent(value)}`;
   }
 
-  // TODO: Check limitations
+  // TODO: Check limitations of 4KB and number of cookies already existing
 
   document.cookie = cookie;
 }

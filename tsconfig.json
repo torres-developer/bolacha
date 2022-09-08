@@ -2,12 +2,17 @@
 	"compilerOptions": {
 		"lib": ["dom", "esnext"],
 		"module": "esnext",
-		"target": "esnext",
+		"target": "es2019",
 		"declaration": true,
 		"outDir": "./lib",
-		"experimentalDecorators": true
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true
 	},
 	"include": [
 		"src/**/*"
-	]
+	],
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"display": "Recommended"
 }
