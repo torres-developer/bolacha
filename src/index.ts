@@ -1,4 +1,4 @@
-type cookieOptions = {
+type Opts = {
   path?: string,
   domain?: string,
   expires?: Date | string,
@@ -7,7 +7,7 @@ type cookieOptions = {
   samesite?: "strict" | "lax",
 }
 
-type cookieOptionsToRemove = {
+type RemoveOpts = {
   path?: string,
   domain?: string,
 }
@@ -15,7 +15,7 @@ type cookieOptionsToRemove = {
 export function writeCookie(
   name: string,
   value: string,
-  options: cookieOptions = {}
+  options: Opts = {}
 ): void {
   if (options.expires && options["max-age"])
     throw new Error("can't use time and max-age at the same time");
@@ -29,7 +29,7 @@ export function writeCookie(
   let cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
 
   for (const key in options) {
-    const value = options[key as keyof cookieOptions];
+    const value = options[key as keyof Opts];
 
     cookie += `; ${key}`;
 
@@ -48,12 +48,22 @@ export function readCookie(name: string): null | string {
       "=([^;]*)"
   ));
 
-  return matches ? decodeURIComponent(matches[1]) : null;
+  if (matches === null) {
+    return null;
+  }
+
+  const value = matches[1];
+
+  if (value === undefined) {
+    return null;
+  }
+
+  return matches ? decodeURIComponent(value) : null;
 }
 
 export function removeCookie(
   name: string,
-  options?: cookieOptionsToRemove
+  options?: RemoveOpts
 ): void {
   writeCookie(name, "", {
     "max-age": 0,

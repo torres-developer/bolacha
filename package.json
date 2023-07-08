@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "bolacha",
+  "version": "1.0.0",
+  "description": "document.cookie helper functions",
+  "keywords": [
+    "cookie",
+    "HTTP"
+  ],
+  "homepage": "https://github.com/torres-developer/bolacha#readme",
+  "bugs": {
+    "url": "https://github.com/torres-developer/bolacha/issues"
+  },
+  "license": "GPL-3.0-or-later",
+  "contributors": [
+    {
+      "name": "João Augusto Torres",
+      "email": "torres.dev@disroot.org",
+      "url": "https://github.com/torres-developer/"
+    }
+  ],
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "browser": "./lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/torres-developer/bolacha"
+  },
+  "scripts": {
+    "build": "rm -rf ./lib/; tsc;"
+  },
+  "dependencies": {
+    "tslib": "^2.6.0"
+  },
+  "devDependencies": {
+    "@tsconfig/esm": "^1.0.4",
+    "@tsconfig/recommended": "^1.0.2",
+    "@tsconfig/strictest": "^2.0.1",
+    "typescript": "^5.1.6"
+  },
+  "type": "module"
+}
