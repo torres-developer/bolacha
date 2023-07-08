@@ -1,30 +1,33 @@
 type Opts = {
-  path?: string,
-  domain?: string,
-  expires?: Date | string,
-  "max-age"?: number | string,
-  secure?: boolean,
-  samesite?: "strict" | "lax",
-}
+  path?: string;
+  domain?: string;
+  expires?: Date | string;
+  "max-age"?: number | string;
+  secure?: boolean;
+  samesite?: "strict" | "lax";
+};
 
 type RemoveOpts = {
-  path?: string,
-  domain?: string,
-}
+  path?: string;
+  domain?: string;
+};
 
 export function writeCookie(
   name: string,
   value: string,
-  options: Opts = {}
+  options: Opts = {},
 ): void {
-  if (options.expires && options["max-age"])
+  if (options.expires && options["max-age"]) {
     throw new Error("can't use time and max-age at the same time");
+  }
 
-  if (options.expires instanceof Date)
+  if (options.expires instanceof Date) {
     options.expires = options.expires.toUTCString();
-
-  if (!Number.isInteger(options["max-age"]))
-    throw new Error("invalid max-age");
+  } else {
+    if (!Number.isInteger(options["max-age"])) {
+      throw new Error("invalid max-age");
+    }
+  }
 
   let cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
 
@@ -33,7 +36,9 @@ export function writeCookie(
 
     cookie += `; ${key}`;
 
-    if (value !== undefined && !(value instanceof Date) && value !== true) cookie += `=${encodeURIComponent(value)}`;
+    if (value !== undefined && !(value instanceof Date) && value !== true) {
+      cookie += `=${encodeURIComponent(value)}`;
+    }
   }
 
   // TODO: Check limitations of 4KB and number of cookies already existing
@@ -42,11 +47,13 @@ export function writeCookie(
 }
 
 export function readCookie(name: string): null | string {
-  const matches = document.cookie.match(new RegExp(
-    "(?:^|; )" +
-      name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
-      "=([^;]*)"
-  ));
+  const matches = document.cookie.match(
+    new RegExp(
+      "(?:^|; )" +
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+        "=([^;]*)",
+    ),
+  );
 
   if (matches === null) {
     return null;
@@ -63,10 +70,10 @@ export function readCookie(name: string): null | string {
 
 export function removeCookie(
   name: string,
-  options?: RemoveOpts
+  options?: RemoveOpts,
 ): void {
   writeCookie(name, "", {
     "max-age": 0,
-    ...options
+    ...options,
   });
 }
